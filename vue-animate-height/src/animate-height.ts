@@ -40,9 +40,7 @@ const PROPS_TO_OMIT = [
 	'delay',
 	'duration',
 	'easing',
-	'height',
-	'onAnimationEnd',
-	'onAnimationStart',
+	'height'
 ];
 
 export const AnimateHeight = defineComponent({

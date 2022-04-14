@@ -1,0 +1,67 @@
+body {
+  background: #fdfdfd;
+}
+
+a,
+a:active,
+a:visited,
+a:focus {
+  color: #E9463F;
+  border-bottom: 1px solid transparent;
+}
+
+a:hover {
+  color: #111;
+  border-bottom-color: #111;
+}
+
+h2, h3, h4 {
+  margin-top: 50px;
+  color: #E9463F;
+}
+
+.header {
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 20px;
+  background: #fff;
+  padding: 20px 0;
+}
+
+.content {
+  position: relative;
+  margin: 0 auto;
+  padding: 0 20px;
+  max-width: 840px;
+}
+
+.buttons button {
+  margin-right: 5px;
+  transition: all 0.1s;
+  background: #111;
+}
+
+.buttons button:hover {
+  background: darken(#E9463F, 20);
+}
+
+.buttons button:focus {
+  background: #E9463F;
+  outline: none;
+}
+
+.demo {
+  border: 2px solid #ddd;
+}
+
+.demo-content {
+  padding: 20px 20px 0;
+  background: #fff;
+}
+
+.demo-3 {
+  margin-bottom: 100px;
+}
+
+.demo-3-wrapper {
+  height: 500px;
+}

@@ -1,0 +1,42 @@
+{
+	"name": "vue-animate-height",
+	"version": "0.0.0",
+	"description": "Lightweight Vue component for animating height using CSS transitions.",
+	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/leonzalion/vue-animate-height.git"
+	},
+	"homepage": "https://github.com/leonzalion/vue-animate-height#readme",
+	"author": {
+		"name": "Leon Si",
+		"email": "contact@leonzalion.com",
+		"url": "https://leonzalion.com"
+	},
+	"type": "module",
+	"exports": "./index.js",
+	"scripts": {
+		"preinstall": "pnpm build",
+		"prepare": "lion-git-hooks",
+		"build": "node-ts ./scripts/build.ts",
+		"start": "node-ts ./src/index.ts",
+		"test": "vitest run",
+		"lint": "eslint --cache --fix .",
+		"prettier": "prettier --write .",
+		"tc": "tsc --noEmit"
+	},
+	"devDependencies": {
+		"desm": "^1.2.0",
+		"execa": "^6.1.0",
+		"lion-system": "^1.0.17",
+		"vitest": "^0.8.3",
+		"vue": "^3.2.33"
+	},
+	"peerDependencies": {
+		"vue": "<=3"
+	},
+	"dependencies": {
+		"classnames": "^2.3.1",
+		"just-omit": "^2.0.1"
+	}
+}
