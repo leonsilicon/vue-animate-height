@@ -8,7 +8,7 @@
 	},
 	"dependencies": {
 		"vue": "^3.2.33",
-		"vue-animate-height": "link:../vue-animate-height"
+		"vue-animate-height": "link:../vue-animate-height/dist"
 	},
 	"devDependencies": {
 		"@vitejs/plugin-vue": "^2.3.1",

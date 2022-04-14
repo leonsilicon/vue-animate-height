@@ -14,7 +14,7 @@
 		"url": "https://leonzalion.com"
 	},
 	"type": "module",
-	"exports": "./index.js",
+	"exports": "./src/index.ts",
 	"scripts": {
 		"preinstall": "pnpm build",
 		"prepare": "lion-git-hooks",

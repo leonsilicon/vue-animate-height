@@ -12,7 +12,9 @@ const { console } = window;
 <template>
 	<div>
 		<h3>Demo, starting height = 0</h3>
-		<p>Current Height: <b>{ height !== null ? height : 'null' }</b></p>
+		<p>
+			Current Height: <b>{{ height !== null ? height : 'null' }}</b>
+		</p>
 		<p class="">Set height to:</p>
 		<div class="buttons">
 			<button class="btn btn-sm" @click="height = 0">0</button>
@@ -74,7 +76,7 @@ const { console } = window;
 			<code>onAnimationStart</code> callbacks. <code>animateOpacity</code> is
 			set to true.
 		</p>
-		<p>Current Height: <b>{ height !== null ? height2 : 'null' }</b></p>
+		<p>Current Height: <b>{{ height !== null ? height2 : 'null' }}</b></p>
 		<p class="">Set height to:</p>
 		<div class="buttons">
 			<button class="btn btn-sm" @click="height2 = 0">0</button>
@@ -150,8 +152,8 @@ const { console } = window;
 			height is set to 500px.
 		</p>
 		<p>
-			Current Height: <b>{ height3 }</b><br />
-			Current Delay: <b>{ delay }</b>
+			Current Height: <b>{{ height3 }}</b><br />
+			Current Delay: <b>{{ delay }}</b>
 		</p>
 		<p>Set delay to:</p>
 		<div class="buttons">
