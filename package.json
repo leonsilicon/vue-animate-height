@@ -3,6 +3,7 @@
 	"type": "module",
 	"scripts": {
 		"release": "pnpm run release --filter=./vue-animate-height",
+		"pnpm:devPreinstall": "pnpm build",
 		"dev:docs": "pnpm run dev --filter=./docs",
 		"build:docs": "pnpm run build --filter=./docs",
 		"prepare": "lion-git-hooks",

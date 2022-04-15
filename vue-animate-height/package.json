@@ -16,9 +16,7 @@
 	"type": "module",
 	"exports": "./src/index.ts",
 	"scripts": {
-		"pnpm:devPreinstall": "pnpm build",
 		"release": "lionp",
-		"prepare": "lion-git-hooks",
 		"build": "node-ts ./scripts/build.ts",
 		"start": "node-ts ./src/index.ts",
 		"test": "vitest run",
