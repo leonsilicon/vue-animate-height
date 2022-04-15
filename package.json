@@ -4,6 +4,7 @@
 	"scripts": {
 		"release": "pnpm run release --filter=./vue-animate-height",
 		"dev:docs": "pnpm run dev --filter=./docs",
+		"build:docs": "pnpm run build --filter=./docs",
 		"prepare": "lion-git-hooks",
 		"build": "pnpm run build --filter=./vue-animate-height",
 		"test": "pnpm run test --filter=./vue-animate-height",

@@ -5,13 +5,13 @@
 
 A port of Stanko's [React Animate Height](https://github.com/Stanko/react-animate-height/blob/master/README.md) for Vue.js.
 
-> Most of the below documentation is derived from [React Animate Height's documentation](https://github.com/Stanko/react-animate-height/blob/master/README.md)
+> Most of the below documentation is derived from [React Animate Height's documentation](https://github.com/Stanko/react-animate-height/blob/master/README.md).
 
 Lightweight Vue component for animating height using CSS transitions.
-Slide up/down the element, and animate it to any specific height.
-Content's opacity can be optionally animated as well (check `animateOpacity` prop bellow).
+Slides the element up or down, and animates it to any specific height.
+The content's opacity can be optionally animated as well (see the `animateOpacity` prop below).
 
-CSS classes are applied in specific animation states, check `animationStateClasses` prop.
+CSS classes are applied during specific animation states. For more information, check out the `animationStateClasses` prop.
 
 [Changelog](CHANGELOG.md)
 
