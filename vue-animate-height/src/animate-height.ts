@@ -5,8 +5,8 @@ import {
 	defineComponent,
 	h,
 	onBeforeUnmount,
-	onBeforeUpdate,
 	onMounted,
+	onUpdated,
 	readonly,
 	ref,
 } from 'vue';
@@ -200,156 +200,156 @@ export const AnimateHeight = defineComponent({
 			}
 		});
 
-		onBeforeUpdate(() => {
+		let prevHeightProp: Height | undefined;
+		onUpdated(() => {
 			const { delay, duration, height } = props;
 
-			// Check if 'height' prop has changed
-			if (
-				contentElement.value !== undefined &&
-				height !== prevState.value?.height
-			) {
-				// Remove display: none from the content div
-				// if it was hidden to prevent tabbing into it
-				if (prevState.value?.height !== undefined) {
-					showContent(prevState.value.height);
-				}
+			// Don't re-start animation if the height property hasn't changed
+			if (contentElement.value === undefined || height === prevHeightProp) {
+				return;
+			}
 
-				// Cache content height
-				contentElement.value.style.overflow = 'hidden';
-				const contentHeight = contentElement.value.offsetHeight;
-				contentElement.value.style.overflow = '';
+			// Remove display: none from the content div
+			// if it was hidden to prevent tabbing into it
+			if (prevHeightProp !== undefined) {
+				showContent(prevHeightProp);
+			}
 
-				// set total animation time
-				const totalDuration = duration + delay;
+			// Cache content height
+			contentElement.value.style.overflow = 'hidden';
+			const contentHeight = contentElement.value.offsetHeight;
+			contentElement.value.style.overflow = '';
 
-				let newHeight: Height;
-				const timeoutState: Omit<Partial<State>, 'overflow'> & {
-					overflow: string | null;
-				} = {
-					overflow: 'hidden',
-				};
-				const isCurrentHeightAuto = prevState.value?.height === 'auto';
+			// set total animation time
+			const totalDuration = duration + delay;
 
-				if (isNumber(height)) {
-					// If value is string "0" make sure we convert it to number 0
-					newHeight = Math.max(0, Number(height));
-					timeoutState.height = newHeight;
-				} else if (isPercentage(height)) {
-					// If value is string "0%" make sure we convert it to number 0
-					newHeight = height === '0%' ? 0 : (height as Height);
-					timeoutState.height = newHeight;
-				} else {
-					// If not, animate to content height
-					// and then reset to auto
-					newHeight = contentHeight; // TODO solve contentHeight = 0
-					timeoutState.height = 'auto';
-					timeoutState.overflow = null;
-				}
+			let newHeight: Height;
+			const timeoutState: Omit<Partial<State>, 'overflow'> & {
+				overflow: string | null;
+			} = {
+				overflow: 'hidden',
+			};
+			const isCurrentHeightAuto = prevState.value?.height === 'auto';
 
-				if (isCurrentHeightAuto) {
-					// This is the height to be animated to
-					timeoutState.height = newHeight;
+			if (isNumber(height)) {
+				// If value is string "0" make sure we convert it to number 0
+				newHeight = Math.max(0, Number(height));
+				timeoutState.height = newHeight;
+			} else if (isPercentage(height)) {
+				// If value is string "0%" make sure we convert it to number 0
+				newHeight = height === '0%' ? 0 : (height as Height);
+				timeoutState.height = newHeight;
+			} else {
+				// If not, animate to content height
+				// and then reset to auto
+				newHeight = contentHeight; // TODO solve contentHeight = 0
+				timeoutState.height = 'auto';
+				timeoutState.overflow = null;
+			}
 
-					// If previous height was 'auto'
-					// set starting height explicitly to be able to use transition
-					newHeight = contentHeight;
-				}
+			if (isCurrentHeightAuto) {
+				// This is the height to be animated to
+				timeoutState.height = newHeight;
 
-				// Animation classes
-				const updatedAnimationStateClasses = classnames({
-					[animationStateClasses.animating]: true,
-					[animationStateClasses.animatingUp]:
-						prevState.value?.height !== undefined &&
-						(prevState.value?.height === 'auto' ||
-							height < prevState.value?.height),
-					[animationStateClasses.animatingDown]:
-						prevState.value?.height !== undefined &&
-						(height === 'auto' || height > prevState.value?.height),
-					[animationStateClasses.animatingToHeightZero]:
-						timeoutState.height === 0,
-					[animationStateClasses.animatingToHeightAuto]:
-						timeoutState.height === 'auto',
-					[animationStateClasses.animatingToHeightSpecific]:
-						timeoutState.height > 0,
+				// If previous height was 'auto'
+				// set starting height explicitly to be able to use transition
+				newHeight = contentHeight;
+			}
+
+			// Animation classes
+			const updatedAnimationStateClasses = classnames({
+				[animationStateClasses.animating]: true,
+				[animationStateClasses.animatingUp]:
+					prevHeightProp !== undefined &&
+					(prevHeightProp === 'auto' || height < prevHeightProp),
+				[animationStateClasses.animatingDown]:
+					prevHeightProp !== undefined &&
+					(height === 'auto' || height > prevHeightProp),
+				[animationStateClasses.animatingToHeightZero]:
+					timeoutState.height === 0,
+				[animationStateClasses.animatingToHeightAuto]:
+					timeoutState.height === 'auto',
+				[animationStateClasses.animatingToHeightSpecific]:
+					timeoutState.height > 0,
+			});
+
+			// Animation classes to be put after animation is complete
+			const timeoutAnimationStateClasses = getStaticStateClasses(
+				timeoutState.height
+			);
+
+			prevHeightProp = height as Height;
+			// Set starting height and animating classes
+			updateState({
+				animationStateClasses: updatedAnimationStateClasses,
+				height: newHeight,
+				overflow: 'hidden',
+				// When animating from 'auto' we first need to set fixed height
+				// that change should be animated
+				shouldUseTransitions: !isCurrentHeightAuto,
+			});
+
+			// Clear timeouts
+			if (timeoutId !== null) {
+				clearTimeout(timeoutId);
+			}
+
+			clearTimeout(animationClassesTimeoutId);
+
+			if (isCurrentHeightAuto) {
+				// When animating from 'auto' we use a short timeout to start animation
+				// after setting fixed height above
+				timeoutState.shouldUseTransitions = true;
+
+				cancelAnimationFrames(animationFrameIds);
+				animationFrameIds = startAnimationHelper(() => {
+					updateState({ ...state.value, ...timeoutState });
+
+					// ANIMATION STARTS
+					emit('animationStart', { newHeight: timeoutState.height });
 				});
 
-				// Animation classes to be put after animation is complete
-				const timeoutAnimationStateClasses = getStaticStateClasses(
-					timeoutState.height
-				);
-
-				// Set starting height and animating classes
-				updateState({
-					animationStateClasses: updatedAnimationStateClasses,
-					height: newHeight,
-					overflow: 'hidden',
-					// When animating from 'auto' we first need to set fixed height
-					// that change should be animated
-					shouldUseTransitions: !isCurrentHeightAuto,
-				});
-
-				// Clear timeouts
-				if (timeoutId !== null) {
-					clearTimeout(timeoutId);
-				}
-
-				clearTimeout(animationClassesTimeoutId);
-
-				if (isCurrentHeightAuto) {
-					// When animating from 'auto' we use a short timeout to start animation
-					// after setting fixed height above
-					timeoutState.shouldUseTransitions = true;
-
-					cancelAnimationFrames(animationFrameIds);
-					animationFrameIds = startAnimationHelper(() => {
-						updateState({ ...state.value, ...timeoutState });
-
-						// ANIMATION STARTS
-						emit('animationStart', { newHeight: timeoutState.height });
+				// Set static classes and remove transitions when animation ends
+				animationClassesTimeoutId = setTimeout(() => {
+					updateState({
+						...state.value,
+						animationStateClasses: timeoutAnimationStateClasses,
+						shouldUseTransitions: false,
 					});
 
-					// Set static classes and remove transitions when animation ends
-					animationClassesTimeoutId = setTimeout(() => {
-						updateState({
-							...state.value,
-							animationStateClasses: timeoutAnimationStateClasses,
-							shouldUseTransitions: false,
-						});
+					// ANIMATION ENDS
+					// Hide content if height is 0 (to prevent tabbing into it)
+					if (
+						timeoutState.height !== null &&
+						timeoutState.height !== undefined
+					) {
+						hideContent(timeoutState.height);
+					}
 
-						// ANIMATION ENDS
+					emit('animationEnd', { newHeight: timeoutState.height });
+				}, totalDuration);
+			} else {
+				// ANIMATION STARTS
+				emit('animationStart', { newHeight });
+
+				// Set end height, classes and remove transitions when animation is complete
+				timeoutId = setTimeout(() => {
+					timeoutState.animationStateClasses = timeoutAnimationStateClasses;
+					timeoutState.shouldUseTransitions = false;
+
+					updateState({ ...state.value, ...timeoutState });
+
+					// ANIMATION ENDS
+					// If height is auto, don't hide the content
+					// (case when element is empty, therefore height is 0)
+					if (height !== 'auto') {
 						// Hide content if height is 0 (to prevent tabbing into it)
-						if (
-							timeoutState.height !== null &&
-							timeoutState.height !== undefined
-						) {
-							hideContent(timeoutState.height);
-						}
+						hideContent(newHeight); // TODO solve newHeight = 0
+					}
 
-						emit('animationEnd', { newHeight: timeoutState.height });
-					}, totalDuration);
-				} else {
-					// ANIMATION STARTS
-					emit('animationStart', { newHeight });
-
-					// Set end height, classes and remove transitions when animation is complete
-					timeoutId = setTimeout(() => {
-						timeoutState.animationStateClasses = timeoutAnimationStateClasses;
-						timeoutState.shouldUseTransitions = false;
-
-						updateState({ ...state.value, ...timeoutState });
-
-						// ANIMATION ENDS
-						// If height is auto, don't hide the content
-						// (case when element is empty, therefore height is 0)
-						if (height !== 'auto') {
-							// Hide content if height is 0 (to prevent tabbing into it)
-							hideContent(newHeight); // TODO solve newHeight = 0
-						}
-
-						// Run a callback if it exists
-						emit('animationEnd', { newHeight });
-					}, totalDuration);
-				}
+					// Run a callback if it exists
+					emit('animationEnd', { newHeight });
+				}, totalDuration);
 			}
 		});
 
