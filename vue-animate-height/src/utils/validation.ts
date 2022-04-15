@@ -1,6 +1,6 @@
 export function isNumber(n: string | number) {
 	if (typeof n === 'string') {
-		n = Number.parseFloat(n);
+		n = Number(n);
 	}
 
 	return !Number.isNaN(n) && Number.isFinite(n);

@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { outdent } from 'outdent';
-import AnimateHeight from 'vue-animate-height';
 import hljs from 'highlight.js';
+import { outdent } from 'outdent';
 import { onMounted } from 'vue';
+import AnimateHeight from 'vue-animate-height';
 
 const height = $ref(0);
 const height2 = $ref('auto');
@@ -58,7 +58,7 @@ onMounted(() => {
 		<p>
 			Current Height: <b>{{ height !== null ? height : 'null' }}</b>
 		</p>
-		<p class="">Set height to:</p>
+		<p>Set height to:</p>
 		<div class="buttons">
 			<button class="btn btn-sm" @click="height = 0">0</button>
 			<button class="btn btn-sm" @click="height = 100">100</button>
@@ -137,7 +137,7 @@ onMounted(() => {
 			animate-opacity
 			@animation-end="
 				(params) => {
-					console.log('React Animate Height - animation started', params);
+					console.log('Vue Animate Height - animation started', params);
 				}
 			"
 			@animation-start="

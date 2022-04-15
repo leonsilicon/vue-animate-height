@@ -5,10 +5,9 @@ import {
 	defineComponent,
 	h,
 	onBeforeUnmount,
+	onBeforeUpdate,
 	onMounted,
-	onUpdated,
 	ref,
-	toRaw,
 	watch,
 } from 'vue';
 
@@ -80,8 +79,8 @@ export const AnimateHeight = defineComponent({
 			default: 'ease',
 		},
 		height: {
-			type: [String, Number] as PropType<string | number>,
-			validator(this: void, value: string | number): boolean {
+			type: [String, Number] as PropType<'auto' | number | `${number}%`>,
+			validator(this: void, value: 'auto' | number): boolean {
 				if (
 					(typeof value === 'number' && value >= 0) ||
 					isPercentage(value) ||
@@ -116,14 +115,13 @@ export const AnimateHeight = defineComponent({
 
 		let animationFrameIds: number[] = [];
 
-		type Height = string | number | undefined;
+		type Height = 'auto' | number | `${number}%`;
 
-		let height: string | number = 'auto';
+		let height: Height = 'auto';
 		let overflow = 'visible';
 
 		if (isNumber(props.height)) {
-			// If value is string "0" make sure we convert it to number 0
-			height = props.height < 0 || props.height === '0' ? 0 : props.height;
+			height = Math.min(0, Number(props.height));
 			overflow = 'hidden';
 		} else if (isPercentage(props.height)) {
 			// If value is string "0%" make sure we convert it to number 0
@@ -161,7 +159,7 @@ export const AnimateHeight = defineComponent({
 
 		type State = {
 			animationStateClasses: string;
-			height: number | string;
+			height: Height;
 			overflow: string;
 			shouldUseTransitions: boolean;
 		};
@@ -173,18 +171,11 @@ export const AnimateHeight = defineComponent({
 			shouldUseTransitions: false,
 		});
 
-		let prevState: State | undefined;
+		const prevState = ref<State>();
 		watch(state, (_newState, oldState) => {
-			prevState = toRaw(oldState);
+			prevState.value = oldState;
 		});
-
-		let prevHeight: number | string | undefined;
-		watch(
-			() => props.height,
-			(_newHeight, oldHeight) => {
-				prevHeight = oldHeight;
-			}
-		);
+		let prevHeight: Height;
 
 		let timeoutId: NodeJS.Timeout | undefined;
 		let animationClassesTimeoutId: NodeJS.Timeout;
@@ -200,14 +191,16 @@ export const AnimateHeight = defineComponent({
 			}
 		});
 
-		onUpdated(() => {
+		onBeforeUpdate(() => {
 			const { delay, duration, height } = props;
 
 			// Check if 'height' prop has changed
 			if (contentElement.value !== undefined && height !== prevHeight) {
 				// Remove display: none from the content div
 				// if it was hidden to prevent tabbing into it
-				showContent(prevState?.height);
+				if (prevHeight !== undefined) {
+					showContent(prevHeight);
+				}
 
 				// Cache content height
 				contentElement.value.style.overflow = 'hidden';
@@ -217,16 +210,16 @@ export const AnimateHeight = defineComponent({
 				// set total animation time
 				const totalDuration = duration + delay;
 
-				let newHeight: string | number | undefined;
+				let newHeight: Height;
 				const timeoutState: Partial<State> = {
 					height: undefined, // it will be always set to either 'auto' or specific number
 					overflow: 'hidden',
 				};
-				const isCurrentHeightAuto = prevState?.height === 'auto';
+				const isCurrentHeightAuto = prevState.value?.height === 'auto';
 
 				if (isNumber(height)) {
 					// If value is string "0" make sure we convert it to number 0
-					newHeight = height < 0 || height === '0' ? 0 : height;
+					newHeight = Math.min(0, Number(height));
 					timeoutState.height = newHeight;
 				} else if (isPercentage(height)) {
 					// If value is string "0%" make sure we convert it to number 0
@@ -253,7 +246,7 @@ export const AnimateHeight = defineComponent({
 				const updatedAnimationStateClasses = classnames({
 					[animationStateClasses.animating]: true,
 					[animationStateClasses.animatingUp]:
-						prevHeight === 'auto' || height < prevHeight!,
+						prevHeight === 'auto' || height < prevHeight,
 					[animationStateClasses.animatingDown]:
 						height === 'auto' || height > prevHeight!,
 					[animationStateClasses.animatingToHeightZero]:
@@ -269,6 +262,7 @@ export const AnimateHeight = defineComponent({
 					timeoutState.height
 				);
 
+				prevHeight = state.value.height;
 				// Set starting height and animating classes
 				state.value = {
 					animationStateClasses: updatedAnimationStateClasses,
@@ -309,7 +303,10 @@ export const AnimateHeight = defineComponent({
 
 						// ANIMATION ENDS
 						// Hide content if height is 0 (to prevent tabbing into it)
-						hideContent(timeoutState.height);
+						if (timeoutState.height !== undefined) {
+							hideContent(timeoutState.height);
+						}
+
 						emit('animationEnd', { newHeight: timeoutState.height });
 					}, totalDuration);
 				} else {
