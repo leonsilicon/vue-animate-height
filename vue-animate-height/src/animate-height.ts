@@ -78,7 +78,7 @@ export const AnimateHeight = defineComponent({
 			default: 'ease',
 		},
 		height: {
-			type: [String, Number] as PropType<'auto' | number | `${number}%`>,
+			type: [String, Number] as PropType<string | number>,
 			validator(this: void, value: 'auto' | number): boolean {
 				if (
 					(typeof value === 'number' && value >= 0) ||
@@ -124,7 +124,7 @@ export const AnimateHeight = defineComponent({
 			overflow = 'hidden';
 		} else if (isPercentage(props.height)) {
 			// If value is string "0%" make sure we convert it to number 0
-			height = props.height === '0%' ? 0 : props.height;
+			height = props.height === '0%' ? 0 : (props.height as Height);
 			overflow = 'hidden';
 		}
 
@@ -236,7 +236,7 @@ export const AnimateHeight = defineComponent({
 					timeoutState.height = newHeight;
 				} else if (isPercentage(height)) {
 					// If value is string "0%" make sure we convert it to number 0
-					newHeight = height === '0%' ? 0 : height;
+					newHeight = height === '0%' ? 0 : (height as Height);
 					timeoutState.height = newHeight;
 				} else {
 					// If not, animate to content height

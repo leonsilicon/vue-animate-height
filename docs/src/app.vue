@@ -4,9 +4,9 @@ import { outdent } from 'outdent';
 import { onMounted } from 'vue';
 import AnimateHeight from 'vue-animate-height';
 
-const height = $ref(0);
-const height2 = $ref('auto');
-const height3 = $ref('auto');
+const height = $ref<string | number>(0);
+const height2 = $ref<string | number>('auto');
+const height3 = $ref<string | number>('auto');
 const delay = $ref(0);
 
 const { console } = window;
@@ -22,6 +22,7 @@ const exampleCode = outdent`
 	  <p>Put as many React or HTML components here.</p>
 	</AnimateHeight>
 `;
+
 onMounted(() => {
 	hljs.highlightAll();
 });
@@ -136,12 +137,12 @@ onMounted(() => {
 			class-name="demo demo-2"
 			animate-opacity
 			@animation-end="
-				(params) => {
+				(params: unknown) => {
 					console.log('Vue Animate Height - animation started', params);
 				}
 			"
 			@animation-start="
-				(params) => {
+				(params: unknown) => {
 					console.log('Vue Animate Height - animation ended', params);
 				}
 			"
