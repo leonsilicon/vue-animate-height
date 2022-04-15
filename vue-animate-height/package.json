@@ -1,6 +1,6 @@
 {
 	"name": "vue-animate-height",
-	"version": "0.0.0",
+	"version": "0.1.0",
 	"description": "Lightweight Vue component for animating height using CSS transitions.",
 	"license": "MIT",
 	"repository": {
