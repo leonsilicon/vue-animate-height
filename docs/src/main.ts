@@ -1,4 +1,6 @@
 import './docs.css';
+import 'highlight.js/styles/github.css';
+import 'virtual:windi.css';
 
 import { createApp } from 'vue';
 

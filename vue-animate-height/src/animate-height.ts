@@ -8,6 +8,7 @@ import {
 	onMounted,
 	onUpdated,
 	ref,
+	toRaw,
 	watch,
 } from 'vue';
 
@@ -40,7 +41,7 @@ const PROPS_TO_OMIT = [
 	'delay',
 	'duration',
 	'easing',
-	'height'
+	'height',
 ];
 
 export const AnimateHeight = defineComponent({
@@ -159,10 +160,10 @@ export const AnimateHeight = defineComponent({
 		const animationStateStaticClasses = getStaticStateClasses(height);
 
 		type State = {
-			animationStateClasses?: string;
-			height: number | string | undefined;
-			overflow: string | undefined;
-			shouldUseTransitions?: boolean;
+			animationStateClasses: string;
+			height: number | string;
+			overflow: string;
+			shouldUseTransitions: boolean;
 		};
 
 		const state = ref<State>({
@@ -172,9 +173,9 @@ export const AnimateHeight = defineComponent({
 			shouldUseTransitions: false,
 		});
 
-		const prevState = ref<State | undefined>();
+		let prevState: State | undefined;
 		watch(state, (_newState, oldState) => {
-			prevState.value = oldState;
+			prevState = toRaw(oldState);
 		});
 
 		let prevHeight: number | string | undefined;
@@ -206,7 +207,7 @@ export const AnimateHeight = defineComponent({
 			if (contentElement.value !== undefined && height !== prevHeight) {
 				// Remove display: none from the content div
 				// if it was hidden to prevent tabbing into it
-				showContent(prevState.value?.height);
+				showContent(prevState?.height);
 
 				// Cache content height
 				contentElement.value.style.overflow = 'hidden';
@@ -217,11 +218,11 @@ export const AnimateHeight = defineComponent({
 				const totalDuration = duration + delay;
 
 				let newHeight: string | number | undefined;
-				const timeoutState: State = {
+				const timeoutState: Partial<State> = {
 					height: undefined, // it will be always set to either 'auto' or specific number
 					overflow: 'hidden',
 				};
-				const isCurrentHeightAuto = prevState.value?.height === 'auto';
+				const isCurrentHeightAuto = prevState?.height === 'auto';
 
 				if (isNumber(height)) {
 					// If value is string "0" make sure we convert it to number 0
@@ -292,7 +293,7 @@ export const AnimateHeight = defineComponent({
 
 					cancelAnimationFrames(animationFrameIds);
 					animationFrameIds = startAnimationHelper(() => {
-						state.value = timeoutState;
+						state.value = { ...state.value, ...timeoutState };
 
 						// ANIMATION STARTS
 						emit('animationStart', { newHeight: timeoutState.height });
@@ -320,7 +321,7 @@ export const AnimateHeight = defineComponent({
 						timeoutState.animationStateClasses = timeoutAnimationStateClasses;
 						timeoutState.shouldUseTransitions = false;
 
-						state.value = timeoutState;
+						state.value = { ...state.value, ...timeoutState };
 
 						// ANIMATION ENDS
 						// If height is auto, don't hide the content
@@ -363,19 +364,19 @@ export const AnimateHeight = defineComponent({
 			const { height, overflow, animationStateClasses, shouldUseTransitions } =
 				state.value;
 
-			const style = attrs.style as CSSProperties;
+			const style = attrs.style as CSSProperties | undefined;
 
 			const componentStyle: CSSProperties = {
 				...style,
 				height,
-				overflow: overflow ?? style.overflow,
+				overflow: overflow ?? style?.overflow,
 			};
 
 			if (shouldUseTransitions && applyInlineTransitions) {
 				componentStyle.transition = `height ${duration}ms ${easing} ${delay}ms`;
 
 				// Include transition passed through styles
-				if (style.transition) {
+				if (style?.transition !== undefined) {
 					componentStyle.transition = `${style.transition}, ${componentStyle.transition}`;
 				}
 
@@ -396,7 +397,7 @@ export const AnimateHeight = defineComponent({
 			}
 
 			const componentClasses = classnames({
-				[animationStateClasses!]: true,
+				[animationStateClasses]: true,
 				[attrs.class as string]: attrs.class,
 			});
 

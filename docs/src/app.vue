@@ -1,5 +1,8 @@
 <script setup lang="ts">
+import { outdent } from 'outdent';
 import AnimateHeight from 'vue-animate-height';
+import hljs from 'highlight.js';
+import { onMounted } from 'vue';
 
 const height = $ref(0);
 const height2 = $ref('auto');
@@ -7,9 +10,49 @@ const height3 = $ref('auto');
 const delay = $ref(0);
 
 const { console } = window;
+
+const exampleCode = outdent`
+	import AnimateHeight from 'vue-animate-height';
+
+	<AnimateHeight
+	  :duration='500'
+	  height='auto'
+	>
+	  <h1>Your content goes here</h1>
+	  <p>Put as many React or HTML components here.</p>
+	</AnimateHeight>
+`;
+onMounted(() => {
+	hljs.highlightAll();
+});
 </script>
 
 <template>
+	<div class="content">
+		<h1>Vue Animate Height</h1>
+
+		<p>
+			Lightweight Vue component for animating height using CSS transitions.
+			Slide up/down the element, and to any specific height. Check the
+			<a href="#demo">demo</a> lower on this page.
+		</p>
+		<p>
+			CSS classes are applied in specific animation states, check
+			<code>animationStateClasses</code> prop.
+		</p>
+		<p>
+			Detailed documentation is available on
+			<a href="https://github.com/leonzalion/vue-animate-height">GitHub</a>.
+		</p>
+
+		<h3>Usage</h3>
+		<p>
+			Import the component, and use it to wrap content whose height you want to
+			animate.
+		</p>
+		<pre class="text-left"><code>{{ exampleCode }}</code></pre>
+	</div>
+
 	<div>
 		<h3>Demo, starting height = 0</h3>
 		<p>
@@ -76,7 +119,9 @@ const { console } = window;
 			<code>onAnimationStart</code> callbacks. <code>animateOpacity</code> is
 			set to true.
 		</p>
-		<p>Current Height: <b>{{ height !== null ? height2 : 'null' }}</b></p>
+		<p>
+			Current Height: <b>{{ height !== null ? height2 : 'null' }}</b>
+		</p>
 		<p class="">Set height to:</p>
 		<div class="buttons">
 			<button class="btn btn-sm" @click="height2 = 0">0</button>
@@ -152,7 +197,8 @@ const { console } = window;
 			height is set to 500px.
 		</p>
 		<p>
-			Current Height: <b>{{ height3 }}</b><br />
+			Current Height: <b>{{ height3 }}</b
+			><br />
 			Current Delay: <b>{{ delay }}</b>
 		</p>
 		<p>Set delay to:</p>
