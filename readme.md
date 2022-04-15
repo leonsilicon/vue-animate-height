@@ -105,16 +105,16 @@ To slide up use `0`, for slide down use `'auto'`
 
   ```javascript
   {
-    animating:                  'rah-animating',
-    animatingUp:                'rah-animating--up',
-    animatingDown:              'rah-animating--down',
-    static:                     'rah-static',
-    animatingToHeightZero:      'rah-animating--to-height-zero',
-    animatingToHeightAuto:      'rah-animating--to-height-auto',
-    animatingToHeightSpecific:  'rah-animating--to-height-specific',
-    staticHeightZero:           'rah-static--height-zero',
-    staticHeightAuto:           'rah-static--height-auto',
-    staticHeightSpecific:       'rah-static--height-specific',
+    animating:                  'vah-animating',
+    animatingUp:                'vah-animating--up',
+    animatingDown:              'vah-animating--down',
+    static:                     'vah-static',
+    animatingToHeightZero:      'vah-animating--to-height-zero',
+    animatingToHeightAuto:      'vah-animating--to-height-auto',
+    animatingToHeightSpecific:  'vah-animating--to-height-specific',
+    staticHeightZero:           'vah-static--height-zero',
+    staticHeightAuto:           'vah-static--height-auto',
+    staticHeightSpecific:       'vah-static--height-specific',
   }
   ```
 
