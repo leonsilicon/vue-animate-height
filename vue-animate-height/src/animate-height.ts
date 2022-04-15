@@ -172,7 +172,8 @@ export const AnimateHeight = defineComponent({
 				shouldUseTransitions: false,
 			});
 
-			const prevState = ref<State>();
+			const prevState = ref<State>(state.value);
+
 			function updateState(newState: State) {
 				prevState.value = state.value;
 				state.value = newState;
@@ -201,7 +202,8 @@ export const AnimateHeight = defineComponent({
 			}
 		});
 
-		let prevHeightProp: Height | undefined;
+		let prevHeightProp: Height = height;
+
 		onUpdated(() => {
 			const { delay, duration, height } = props;
 
@@ -215,7 +217,7 @@ export const AnimateHeight = defineComponent({
 
 			// Remove display: none from the content div
 			// if it was hidden to prevent tabbing into it
-			if (prevState.value?.height !== undefined) {
+			if (prevState.value.height !== undefined) {
 				showContent(prevState.value.height);
 			}
 
@@ -233,7 +235,7 @@ export const AnimateHeight = defineComponent({
 			} = {
 				overflow: 'hidden',
 			};
-			const isCurrentHeightAuto = prevState.value?.height === 'auto';
+			const isCurrentHeightAuto = prevHeight === 'auto';
 
 			if (isNumber(height)) {
 				// If value is string "0" make sure we convert it to number 0
