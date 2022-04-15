@@ -121,7 +121,7 @@ export const AnimateHeight = defineComponent({
 		let overflow = 'visible';
 
 		if (isNumber(props.height)) {
-			height = Math.min(0, Number(props.height));
+			height = Math.max(0, Number(props.height));
 			overflow = 'hidden';
 		} else if (isPercentage(props.height)) {
 			// If value is string "0%" make sure we convert it to number 0
@@ -219,7 +219,7 @@ export const AnimateHeight = defineComponent({
 
 				if (isNumber(height)) {
 					// If value is string "0" make sure we convert it to number 0
-					newHeight = Math.min(0, Number(height));
+					newHeight = Math.max(0, Number(height));
 					timeoutState.height = newHeight;
 				} else if (isPercentage(height)) {
 					// If value is string "0%" make sure we convert it to number 0
@@ -362,10 +362,11 @@ export const AnimateHeight = defineComponent({
 				state.value;
 
 			const style = attrs.style as CSSProperties | undefined;
+			const heightStyle = typeof height === 'number' ? `${height}px` : height;
 
 			const componentStyle: CSSProperties = {
 				...style,
-				height,
+				height: heightStyle,
 				overflow: overflow ?? style?.overflow,
 			};
 
