@@ -3,12 +3,12 @@
 [![npm version](https://img.shields.io/npm/v/vue-animate-height.svg?style=flat-square)](https://www.npmjs.com/package/vue-animate-height)
 [![npm downloads](https://img.shields.io/npm/dm/vue-animate-height.svg?style=flat-square)](https://www.npmjs.com/package/vue-animate-height)
 
-A port of Stanko's [React Animate Height](https://github.com/Stanko/react-animate-height/blob/master/README.md) for Vue.js.
+A port of Stanko's [React Animate Height](https://github.com/Stanko/react-animate-height) for Vue.js.
 
 > Most of the below documentation is derived from [React Animate Height's documentation](https://github.com/Stanko/react-animate-height/blob/master/README.md).
 
 Lightweight Vue component for animating height using CSS transitions.
-Slides the element up or down, and animates it to any specific height.
+Slides the element up or down and animates it to any specific height.
 The content's opacity can be optionally animated as well (see the `animateOpacity` prop below).
 
 CSS classes are applied during specific animation states. For more information, check out the `animationStateClasses` prop.
@@ -78,15 +78,15 @@ To slide up use <code>0</code>, for slide down use <code>'auto'</code>
 
 - **duration**: integer, default: `250`
 
-  Duration of the animation in milliseconds
+  Duration of the animation in milliseconds.
 
 - **delay**: integer, default: `0`
 
-  Animation delay in milliseconds
+  Animation delay in milliseconds.
 
 - **easing**: string, default: `'ease'`
 
-  CSS easing function to be applied to the animation
+  CSS easing function to be applied to the animation.
 
 - **id**: string
 
@@ -94,7 +94,7 @@ To slide up use <code>0</code>, for slide down use <code>'auto'</code>
 
 - **contentClassName**: string
 
-  CSS class to be applied to content wrapper element
+  CSS class to be applied to content wrapper element.
 
   **Please note that you shouldn't apply properties that are messing with the layout (like `display`, `height`...), as these might break height calculations**
 
@@ -117,21 +117,19 @@ To slide up use <code>0</code>, for slide down use <code>'auto'</code>
   }
   ```
 
-  Please note that this one will be merged with the default object and cached when component is created,
-  so changing it afterwards will have no effect.
+  Please note that this object will be merged with the default object and cached when component is created, so changing it afterwards will have no effect.
 
 - **applyInlineTransitions**: boolean, default: `true`
 
-  If this flag is set to `false` only CSS classes will be applied to the element and inline
-  transition styles will not be present.
+  If this flag is set to `false`, only CSS classes will be applied to the element and inline transition styles will not be present.
 
 - **animateOpacity**: boolean, default: `false`
 
-  If set to `true` content will fade-in (and fade-out) while height is animated.
+  If set to `true`, the content will fade in (and fade out) while the height is animated.
 
 - **aria-hidden**: boolean
 
-  By default, library will set `aria-hidden` to `true` when height is zero. If you wish to override it, you can pass the prop yourself.
+  By default, this library will set `aria-hidden` to `true` when height is zero. If you wish to override it, you can pass this prop yourself.
 
 ### Emits
 
@@ -153,9 +151,9 @@ Additional props will be forwarded to the wrapper `div` to make adding attribute
 
 ## Accessibility
 
-When the `height` prop is `0`, this library will hide the content using `display: hidden`. It will also apply `aria-hidden="true"` which you can override it by passing `aria-hidden` prop yourself.
+When the `height` prop is `0`, this library will hide the content using `display: hidden`. It will also apply `aria-hidden="true"` which you can override by passing `aria-hidden` prop yourself.
 
-When using a button to toggle height, make sure you add `aria-expanded` and `aria-controls` to make everything accessible. Here's an example:
+When using a button to toggle height, make sure you add `aria-expanded` and `aria-controls` to make everything accessible:
 
 ```vue
 <!-- The id of `aria-controls` has to match the id passed to AnimateHeight -->
@@ -177,17 +175,16 @@ When using a button to toggle height, make sure you add `aria-expanded` and `ari
 
 ### Bounded flexboxes
 
-If `AnimateHeight` is a flex child and it's parent has a fixed height, the animation won't work.
-To fix this, you just need to add the following CSS rule to the `AnimateHeight` instance.
+If `AnimateHeight` is a flex child and its parent has a fixed height, the animation won't work. To fix this, you just need to add the following CSS rule to the `AnimateHeight` instance:
 
 ```css
 flex-shrink: 0;
 ```
 
-You can do it by passing a `class` or directly in the `style` prop
+You can do this by passing a `class` or by using inline CSS in the `style` prop:
 
 ```vue
-<AnimateHeight style="flexShrink: 0">
+<AnimateHeight style="flex-shrink: 0">
 ```
 
-Check the [issue #89](https://github.com/Stanko/react-animate-height/issues/89) for the example and more details.
+Check out [issue #89](https://github.com/Stanko/react-animate-height/issues/89) for the example and more details.
