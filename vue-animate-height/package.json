@@ -17,6 +17,7 @@
 	"exports": "./src/index.ts",
 	"scripts": {
 		"preinstall": "pnpm build",
+		"release": "lionp",
 		"prepare": "lion-git-hooks",
 		"build": "node-ts ./scripts/build.ts",
 		"start": "node-ts ./src/index.ts",
@@ -38,5 +39,8 @@
 	"dependencies": {
 		"classnames": "^2.3.1",
 		"just-omit": "^2.0.1"
+	},
+	"publishConfig": {
+		"directory": "dist"
 	}
 }

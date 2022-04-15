@@ -2,6 +2,7 @@
 	"name": "vue-animate-height-monorepo",
 	"type": "module",
 	"scripts": {
+		"release": "pnpm run release --filter=./vue-animate-height",
 		"dev:docs": "pnpm run dev --filter=./docs",
 		"prepare": "lion-git-hooks",
 		"build": "pnpm run build --filter=./vue-animate-height",
