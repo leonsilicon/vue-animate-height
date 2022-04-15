@@ -17,6 +17,7 @@
 	"exports": "./src/index.ts",
 	"scripts": {
 		"release": "lionp",
+		"preinstall": "pnpm build",
 		"build": "node-ts ./scripts/build.ts",
 		"start": "node-ts ./src/index.ts",
 		"test": "vitest run",
