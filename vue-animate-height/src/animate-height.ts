@@ -7,8 +7,8 @@ import {
 	onBeforeUnmount,
 	onBeforeUpdate,
 	onMounted,
+	readonly,
 	ref,
-	watch,
 } from 'vue';
 
 import type { AnimationStateClasses } from '~/types.js';
@@ -35,7 +35,6 @@ const PROPS_TO_OMIT = [
 	'animateOpacity',
 	'animationStateClasses',
 	'applyInlineTransitions',
-	'children',
 	'contentClassName',
 	'delay',
 	'duration',
@@ -160,24 +159,30 @@ export const AnimateHeight = defineComponent({
 		type State = {
 			animationStateClasses: string;
 			height: Height;
-			overflow: string;
+			overflow: string | null;
 			shouldUseTransitions: boolean;
 		};
 
-		const state = ref<State>({
-			animationStateClasses: animationStateStaticClasses,
-			height,
-			overflow,
-			shouldUseTransitions: false,
-		});
+		function useState() {
+			const state = ref<State>({
+				animationStateClasses: animationStateStaticClasses,
+				height,
+				overflow,
+				shouldUseTransitions: false,
+			});
 
-		const prevState = ref<State>();
-		watch(state, (_newState, oldState) => {
-			prevState.value = oldState;
-		});
-		let prevHeight: Height;
+			let prevState: State | undefined;
+			function updateState(newState: State) {
+				prevState = state.value;
+				state.value = newState;
+			}
 
-		let timeoutId: NodeJS.Timeout | undefined;
+			return { prevState, updateState, state: readonly(state) };
+		}
+
+		const { prevState, updateState, state } = useState();
+
+		let timeoutId: NodeJS.Timeout | null;
 		let animationClassesTimeoutId: NodeJS.Timeout;
 
 		onMounted(() => {
@@ -186,7 +191,7 @@ export const AnimateHeight = defineComponent({
 			// Hide content if height is 0 (to prevent tabbing into it)
 			// Check for contentElement is added cause this would fail in tests (react-test-renderer)
 			// Read more here: https://github.com/Stanko/react-animate-height/issues/17
-			if (contentElement.value?.style !== undefined) {
+			if (contentElement.value?.style !== undefined && height !== null) {
 				hideContent(height);
 			}
 		});
@@ -195,11 +200,11 @@ export const AnimateHeight = defineComponent({
 			const { delay, duration, height } = props;
 
 			// Check if 'height' prop has changed
-			if (contentElement.value !== undefined && height !== prevHeight) {
+			if (contentElement.value !== undefined && height !== prevState?.height) {
 				// Remove display: none from the content div
 				// if it was hidden to prevent tabbing into it
-				if (prevHeight !== undefined) {
-					showContent(prevHeight);
+				if (prevState?.height !== undefined) {
+					showContent(prevState.height);
 				}
 
 				// Cache content height
@@ -211,11 +216,13 @@ export const AnimateHeight = defineComponent({
 				const totalDuration = duration + delay;
 
 				let newHeight: Height;
-				const timeoutState: Partial<State> = {
-					height: undefined, // it will be always set to either 'auto' or specific number
+				const timeoutState: Omit<Partial<State>, 'overflow'> & {
+					overflow: string | null;
+				} = {
 					overflow: 'hidden',
 				};
-				const isCurrentHeightAuto = prevState.value?.height === 'auto';
+				const isCurrentHeightAuto = prevState?.height === 'auto';
+				console.log('isCurrent', prevState);
 
 				if (isNumber(height)) {
 					// If value is string "0" make sure we convert it to number 0
@@ -230,7 +237,7 @@ export const AnimateHeight = defineComponent({
 					// and then reset to auto
 					newHeight = contentHeight; // TODO solve contentHeight = 0
 					timeoutState.height = 'auto';
-					timeoutState.overflow = undefined;
+					timeoutState.overflow = null;
 				}
 
 				if (isCurrentHeightAuto) {
@@ -246,9 +253,11 @@ export const AnimateHeight = defineComponent({
 				const updatedAnimationStateClasses = classnames({
 					[animationStateClasses.animating]: true,
 					[animationStateClasses.animatingUp]:
-						prevHeight === 'auto' || height < prevHeight,
+						prevState?.height !== undefined &&
+						(prevState.height === 'auto' || height < prevState.height),
 					[animationStateClasses.animatingDown]:
-						height === 'auto' || height > prevHeight!,
+						prevState?.height !== undefined &&
+						(height === 'auto' || height > prevState.height),
 					[animationStateClasses.animatingToHeightZero]:
 						timeoutState.height === 0,
 					[animationStateClasses.animatingToHeightAuto]:
@@ -262,19 +271,18 @@ export const AnimateHeight = defineComponent({
 					timeoutState.height
 				);
 
-				prevHeight = state.value.height;
 				// Set starting height and animating classes
-				state.value = {
+				updateState({
 					animationStateClasses: updatedAnimationStateClasses,
 					height: newHeight,
 					overflow: 'hidden',
 					// When animating from 'auto' we first need to set fixed height
 					// that change should be animated
 					shouldUseTransitions: !isCurrentHeightAuto,
-				};
+				});
 
 				// Clear timeouts
-				if (timeoutId !== undefined) {
+				if (timeoutId !== null) {
 					clearTimeout(timeoutId);
 				}
 
@@ -287,7 +295,7 @@ export const AnimateHeight = defineComponent({
 
 					cancelAnimationFrames(animationFrameIds);
 					animationFrameIds = startAnimationHelper(() => {
-						state.value = { ...state.value, ...timeoutState };
+						updateState({ ...state.value, ...timeoutState });
 
 						// ANIMATION STARTS
 						emit('animationStart', { newHeight: timeoutState.height });
@@ -295,15 +303,18 @@ export const AnimateHeight = defineComponent({
 
 					// Set static classes and remove transitions when animation ends
 					animationClassesTimeoutId = setTimeout(() => {
-						state.value = {
+						updateState({
 							...state.value,
 							animationStateClasses: timeoutAnimationStateClasses,
 							shouldUseTransitions: false,
-						};
+						});
 
 						// ANIMATION ENDS
 						// Hide content if height is 0 (to prevent tabbing into it)
-						if (timeoutState.height !== undefined) {
+						if (
+							timeoutState.height !== null &&
+							timeoutState.height !== undefined
+						) {
 							hideContent(timeoutState.height);
 						}
 
@@ -318,7 +329,7 @@ export const AnimateHeight = defineComponent({
 						timeoutState.animationStateClasses = timeoutAnimationStateClasses;
 						timeoutState.shouldUseTransitions = false;
 
-						state.value = { ...state.value, ...timeoutState };
+						updateState({ ...state.value, ...timeoutState });
 
 						// ANIMATION ENDS
 						// If height is auto, don't hide the content
@@ -338,13 +349,13 @@ export const AnimateHeight = defineComponent({
 		onBeforeUnmount(() => {
 			cancelAnimationFrames(animationFrameIds);
 
-			if (timeoutId !== undefined) {
+			if (timeoutId !== null) {
 				clearTimeout(timeoutId);
 			}
 
 			clearTimeout(animationClassesTimeoutId);
 
-			timeoutId = undefined;
+			timeoutId = null;
 		});
 
 		return () => {
@@ -361,8 +372,9 @@ export const AnimateHeight = defineComponent({
 			const { height, overflow, animationStateClasses, shouldUseTransitions } =
 				state.value;
 
-			const style = attrs.style as CSSProperties | undefined;
-			const heightStyle = typeof height === 'number' ? `${height}px` : height;
+			const style = attrs.style as CSSProperties | null;
+			const heightStyle =
+				typeof height === 'number' ? `${height}px` : height ?? undefined;
 
 			const componentStyle: CSSProperties = {
 				...style,
@@ -374,7 +386,7 @@ export const AnimateHeight = defineComponent({
 				componentStyle.transition = `height ${duration}ms ${easing} ${delay}ms`;
 
 				// Include transition passed through styles
-				if (style?.transition !== undefined) {
+				if (style?.transition !== null && style?.transition !== undefined) {
 					componentStyle.transition = `${style.transition}, ${componentStyle.transition}`;
 				}
 
