@@ -149,7 +149,8 @@ export const AnimateHeight = defineComponent({
 			return classnames({
 				[animationStateClasses.static]: true,
 				[animationStateClasses.staticHeightZero]: height === 0,
-				[animationStateClasses.staticHeightSpecific]: height > 0,
+				[animationStateClasses.staticHeightSpecific]:
+					typeof height === 'number' && height > 0,
 				[animationStateClasses.staticHeightAuto]: height === 'auto',
 			});
 		}
@@ -209,10 +210,13 @@ export const AnimateHeight = defineComponent({
 				return;
 			}
 
+			const prevHeight = prevHeightProp;
+			prevHeightProp = height as Height;
+
 			// Remove display: none from the content div
 			// if it was hidden to prevent tabbing into it
-			if (prevHeightProp !== undefined) {
-				showContent(prevHeightProp);
+			if (prevState.value?.height !== undefined) {
+				showContent(prevState.value.height);
 			}
 
 			// Cache content height
@@ -260,11 +264,11 @@ export const AnimateHeight = defineComponent({
 			const updatedAnimationStateClasses = classnames({
 				[animationStateClasses.animating]: true,
 				[animationStateClasses.animatingUp]:
-					prevHeightProp !== undefined &&
-					(prevHeightProp === 'auto' || height < prevHeightProp),
+					prevHeight !== undefined &&
+					(prevHeight === 'auto' || height < prevHeight),
 				[animationStateClasses.animatingDown]:
-					prevHeightProp !== undefined &&
-					(height === 'auto' || height > prevHeightProp),
+					prevHeight !== undefined &&
+					(height === 'auto' || height > prevHeight),
 				[animationStateClasses.animatingToHeightZero]:
 					timeoutState.height === 0,
 				[animationStateClasses.animatingToHeightAuto]:
@@ -278,7 +282,6 @@ export const AnimateHeight = defineComponent({
 				timeoutState.height
 			);
 
-			prevHeightProp = height as Height;
 			// Set starting height and animating classes
 			updateState({
 				animationStateClasses: updatedAnimationStateClasses,
