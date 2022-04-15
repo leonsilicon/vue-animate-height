@@ -70,16 +70,18 @@ onMounted(() => {
 		<AnimateHeight :height="height" class="demo demo-1">
 			<div class="demo-content">
 				<p>
-					It looked serious, but we in California, like everywhere else, were
-					not alarmed. We were sure that the bacteriologists would find a way to
-					overcome this new germ, just as they had overcome other germs in the
-					past. But the trouble was the astonishing quickness with which this
-					germ destroyed human beings, and the fact that it inevitably killed
-					any human body it entered. No one ever recovered. There was the old
-					Asiatic cholera, when you might eat dinner with a well man in the
-					evening, and the next morning, if you got up early enough, you would
-					see him being hauled by your window in the death-cart. But this new
-					plague was quicker than that&mdash;much quicker.
+					Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque
+					molestie fringilla lobortis. Ut luctus, nisi mattis sagittis cursus,
+					magna urna efficitur felis, eu efficitur felis sem vitae tortor.
+					Curabitur interdum nisi ut ultricies tincidunt. Phasellus consequat
+					ultricies tincidunt. Ut pellentesque justo et ante accumsan,
+					consectetur tempus libero consectetur. Fusce molestie a urna eu
+					hendrerit. Donec molestie lacinia sem non maximus. Nulla quis lorem
+					vel turpis molestie euismod non id mi. Vestibulum placerat lobortis
+					volutpat. Sed auctor mattis ipsum cursus volutpat. Nunc vel elit mi.
+					Ut rhoncus ex rhoncus orci aliquet molestie. Aliquam et orci at ligula
+					porttitor imperdiet. Nullam at sollicitudin dolor, eget ullamcorper
+					mauris.
 				</p>
 				<input
 					class="form-control"
@@ -88,27 +90,28 @@ onMounted(() => {
 					@focus="() => console.log('Input 1 focused')"
 				/>
 				<p>
-					From the moment of the first signs of it, a man would be dead in an
-					hour. Some lasted for several hours. Many died within ten or fifteen
-					minutes of the appearance of the first signs.
+					Donec rhoncus vulputate eros, vitae consectetur est lobortis a. Nam et
+					metus tincidunt, posuere arcu non, iaculis est. Donec feugiat ipsum
+					sit amet nibh dictum tempus. Phasellus nec fermentum arcu, ac
+					facilisis lorem.
 				</p>
 				<p>
-					The heart began to beat faster and the heat of the body to increase.
-					Then came the scarlet rash, spreading like wildfire over the face and
-					body. Most persons never noticed the increase in heat and heart-beat,
-					and the first they knew was when the scarlet rash came out. Usually,
-					they had convulsions at the time of the appearance of the rash. But
-					these convulsions did not last long and were not very severe. If one
-					lived through them, he became perfectly quiet, and only did he feel a
-					numbness swiftly creeping up his body from the feet. The heels became
-					numb first, then the legs, and hips, and when the numbness reached as
-					high as his heart he died. They did not rave or sleep. Their minds
-					always remained cool and calm up to the moment their heart numbed and
-					stopped. And another strange thing was the rapidity of decomposition.
-					No sooner was a person dead than the body seemed to fall to pieces, to
-					fly apart, to melt away even as you looked at it. That was one of the
-					reasons the plague spread so rapidly. All the billions of germs in a
-					corpse were so immediately released.
+					Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam erat
+					volutpat. Nam semper eget velit sed efficitur. Suspendisse aliquam
+					malesuada augue, nec aliquam diam posuere id. Vestibulum ut vestibulum
+					arcu. Maecenas ex ipsum, lacinia vitae metus non, efficitur luctus
+					nunc. Morbi ullamcorper porttitor rhoncus. Aenean eleifend nunc a urna
+					consectetur, egestas feugiat justo sodales. Integer ut sem ac purus
+					iaculis iaculis eu id nibh. Morbi mauris sapien, ultrices sit amet
+					sodales in, aliquet rhoncus massa. Sed tristique ex quis ante
+					malesuada, nec rhoncus dolor consectetur. Nulla ipsum ex, suscipit
+					tincidunt ipsum nec, dignissim scelerisque eros. Curabitur quis augue
+					elit. Morbi porta elit in urna consectetur scelerisque. Proin vel
+					iaculis lectus, non bibendum nisi. Maecenas convallis nibh ut risus
+					rhoncus, sit amet tincidunt massa consequat. Fusce dignissim, turpis
+					ut dignissim mattis, nunc orci dignissim lacus, in feugiat lectus
+					turpis ut turpis. Aenean pharetra, arcu quis luctus scelerisque, nibh
+					ligula auctor massa, sed ullamcorper tortor mauris tempus quam.
 				</p>
 			</div>
 		</AnimateHeight>
@@ -149,16 +152,18 @@ onMounted(() => {
 		>
 			<div class="demo-content">
 				<p>
-					It looked serious, but we in California, like everywhere else, were
-					not alarmed. We were sure that the bacteriologists would find a way to
-					overcome this new germ, just as they had overcome other germs in the
-					past. But the trouble was the astonishing quickness with which this
-					germ destroyed human beings, and the fact that it inevitably killed
-					any human body it entered. No one ever recovered. There was the old
-					Asiatic cholera, when you might eat dinner with a well man in the
-					evening, and the next morning, if you got up early enough, you would
-					see him being hauled by your window in the death-cart. But this new
-					plague was quicker than that&mdash;much quicker.
+					Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque
+					molestie fringilla lobortis. Ut luctus, nisi mattis sagittis cursus,
+					magna urna efficitur felis, eu efficitur felis sem vitae tortor.
+					Curabitur interdum nisi ut ultricies tincidunt. Phasellus consequat
+					ultricies tincidunt. Ut pellentesque justo et ante accumsan,
+					consectetur tempus libero consectetur. Fusce molestie a urna eu
+					hendrerit. Donec molestie lacinia sem non maximus. Nulla quis lorem
+					vel turpis molestie euismod non id mi. Vestibulum placerat lobortis
+					volutpat. Sed auctor mattis ipsum cursus volutpat. Nunc vel elit mi.
+					Ut rhoncus ex rhoncus orci aliquet molestie. Aliquam et orci at ligula
+					porttitor imperdiet. Nullam at sollicitudin dolor, eget ullamcorper
+					mauris.
 				</p>
 				<input
 					class="form-control"
@@ -167,35 +172,36 @@ onMounted(() => {
 					@focus="console.log('Input 2 focused')"
 				/>
 				<p>
-					From the moment of the first signs of it, a man would be dead in an
-					hour. Some lasted for several hours. Many died within ten or fifteen
-					minutes of the appearance of the first signs.
+					Donec rhoncus vulputate eros, vitae consectetur est lobortis a. Nam et
+					metus tincidunt, posuere arcu non, iaculis est. Donec feugiat ipsum
+					sit amet nibh dictum tempus. Phasellus nec fermentum arcu, ac
+					facilisis lorem.
 				</p>
 				<p>
-					The heart began to beat faster and the heat of the body to increase.
-					Then came the scarlet rash, spreading like wildfire over the face and
-					body. Most persons never noticed the increase in heat and heart-beat,
-					and the first they knew was when the scarlet rash came out. Usually,
-					they had convulsions at the time of the appearance of the rash. But
-					these convulsions did not last long and were not very severe. If one
-					lived through them, he became perfectly quiet, and only did he feel a
-					numbness swiftly creeping up his body from the feet. The heels became
-					numb first, then the legs, and hips, and when the numbness reached as
-					high as his heart he died. They did not rave or sleep. Their minds
-					always remained cool and calm up to the moment their heart numbed and
-					stopped. And another strange thing was the rapidity of decomposition.
-					No sooner was a person dead than the body seemed to fall to pieces, to
-					fly apart, to melt away even as you looked at it. That was one of the
-					reasons the plague spread so rapidly. All the billions of germs in a
-					corpse were so immediately released.
+					Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam erat
+					volutpat. Nam semper eget velit sed efficitur. Suspendisse aliquam
+					malesuada augue, nec aliquam diam posuere id. Vestibulum ut vestibulum
+					arcu. Maecenas ex ipsum, lacinia vitae metus non, efficitur luctus
+					nunc. Morbi ullamcorper porttitor rhoncus. Aenean eleifend nunc a urna
+					consectetur, egestas feugiat justo sodales. Integer ut sem ac purus
+					iaculis iaculis eu id nibh. Morbi mauris sapien, ultrices sit amet
+					sodales in, aliquet rhoncus massa. Sed tristique ex quis ante
+					malesuada, nec rhoncus dolor consectetur. Nulla ipsum ex, suscipit
+					tincidunt ipsum nec, dignissim scelerisque eros. Curabitur quis augue
+					elit. Morbi porta elit in urna consectetur scelerisque. Proin vel
+					iaculis lectus, non bibendum nisi. Maecenas convallis nibh ut risus
+					rhoncus, sit amet tincidunt massa consequat. Fusce dignissim, turpis
+					ut dignissim mattis, nunc orci dignissim lacus, in feugiat lectus
+					turpis ut turpis. Aenean pharetra, arcu quis luctus scelerisque, nibh
+					ligula auctor massa, sed ullamcorper tortor mauris tempus quam.
 				</p>
 			</div>
 		</AnimateHeight>
 
 		<h3>Demo, with transition delay</h3>
 		<p>
-			Here you can see <code>delay</code> prop in action. Parent&apos;s div
-			height is set to 500px.
+			Here you can see the <code>delay</code> prop in action. The parent&apos;s
+			div height is set to 500px.
 		</p>
 		<p>
 			Current Height: <b>{{ height3 }}</b
@@ -233,16 +239,18 @@ onMounted(() => {
 			>
 				<div class="demo-content">
 					<p>
-						It looked serious, but we in California, like everywhere else, were
-						not alarmed. We were sure that the bacteriologists would find a way
-						to overcome this new germ, just as they had overcome other germs in
-						the past. But the trouble was the astonishing quickness with which
-						this germ destroyed human beings, and the fact that it inevitably
-						killed any human body it entered. No one ever recovered. There was
-						the old Asiatic cholera, when you might eat dinner with a well man
-						in the evening, and the next morning, if you got up early enough,
-						you would see him being hauled by your window in the death-cart. But
-						this new plague was quicker than that&mdash;much quicker.
+						Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+						Pellentesque molestie fringilla lobortis. Ut luctus, nisi mattis
+						sagittis cursus, magna urna efficitur felis, eu efficitur felis sem
+						vitae tortor. Curabitur interdum nisi ut ultricies tincidunt.
+						Phasellus consequat ultricies tincidunt. Ut pellentesque justo et
+						ante accumsan, consectetur tempus libero consectetur. Fusce molestie
+						a urna eu hendrerit. Donec molestie lacinia sem non maximus. Nulla
+						quis lorem vel turpis molestie euismod non id mi. Vestibulum
+						placerat lobortis volutpat. Sed auctor mattis ipsum cursus volutpat.
+						Nunc vel elit mi. Ut rhoncus ex rhoncus orci aliquet molestie.
+						Aliquam et orci at ligula porttitor imperdiet. Nullam at
+						sollicitudin dolor, eget ullamcorper mauris.
 					</p>
 					<input
 						class="form-control"
@@ -251,28 +259,29 @@ onMounted(() => {
 						@focus="() => console.log('Input 2 focused')"
 					/>
 					<p>
-						From the moment of the first signs of it, a man would be dead in an
-						hour. Some lasted for several hours. Many died within ten or fifteen
-						minutes of the appearance of the first signs.
+						Donec rhoncus vulputate eros, vitae consectetur est lobortis a. Nam
+						et metus tincidunt, posuere arcu non, iaculis est. Donec feugiat
+						ipsum sit amet nibh dictum tempus. Phasellus nec fermentum arcu, ac
+						facilisis lorem.
 					</p>
 					<p>
-						The heart began to beat faster and the heat of the body to increase.
-						Then came the scarlet rash, spreading like wildfire over the face
-						and body. Most persons never noticed the increase in heat and
-						heart-beat, and the first they knew was when the scarlet rash came
-						out. Usually, they had convulsions at the time of the appearance of
-						the rash. But these convulsions did not last long and were not very
-						severe. If one lived through them, he became perfectly quiet, and
-						only did he feel a numbness swiftly creeping up his body from the
-						feet. The heels became numb first, then the legs, and hips, and when
-						the numbness reached as high as his heart he died. They did not rave
-						or sleep. Their minds always remained cool and calm up to the moment
-						their heart numbed and stopped. And another strange thing was the
-						rapidity of decomposition. No sooner was a person dead than the body
-						seemed to fall to pieces, to fly apart, to melt away even as you
-						looked at it. That was one of the reasons the plague spread so
-						rapidly. All the billions of germs in a corpse were so immediately
-						released.
+						Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam
+						erat volutpat. Nam semper eget velit sed efficitur. Suspendisse
+						aliquam malesuada augue, nec aliquam diam posuere id. Vestibulum ut
+						vestibulum arcu. Maecenas ex ipsum, lacinia vitae metus non,
+						efficitur luctus nunc. Morbi ullamcorper porttitor rhoncus. Aenean
+						eleifend nunc a urna consectetur, egestas feugiat justo sodales.
+						Integer ut sem ac purus iaculis iaculis eu id nibh. Morbi mauris
+						sapien, ultrices sit amet sodales in, aliquet rhoncus massa. Sed
+						tristique ex quis ante malesuada, nec rhoncus dolor consectetur.
+						Nulla ipsum ex, suscipit tincidunt ipsum nec, dignissim scelerisque
+						eros. Curabitur quis augue elit. Morbi porta elit in urna
+						consectetur scelerisque. Proin vel iaculis lectus, non bibendum
+						nisi. Maecenas convallis nibh ut risus rhoncus, sit amet tincidunt
+						massa consequat. Fusce dignissim, turpis ut dignissim mattis, nunc
+						orci dignissim lacus, in feugiat lectus turpis ut turpis. Aenean
+						pharetra, arcu quis luctus scelerisque, nibh ligula auctor massa,
+						sed ullamcorper tortor mauris tempus quam.
 					</p>
 				</div>
 			</AnimateHeight>
