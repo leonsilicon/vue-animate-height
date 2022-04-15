@@ -171,13 +171,17 @@ export const AnimateHeight = defineComponent({
 				shouldUseTransitions: false,
 			});
 
-			let prevState: State | undefined;
+			const prevState = ref<State>();
 			function updateState(newState: State) {
-				prevState = state.value;
+				prevState.value = state.value;
 				state.value = newState;
 			}
 
-			return { prevState, updateState, state: readonly(state) };
+			return {
+				prevState: readonly(prevState),
+				updateState,
+				state: readonly(state),
+			};
 		}
 
 		const { prevState, updateState, state } = useState();
@@ -200,11 +204,14 @@ export const AnimateHeight = defineComponent({
 			const { delay, duration, height } = props;
 
 			// Check if 'height' prop has changed
-			if (contentElement.value !== undefined && height !== prevState?.height) {
+			if (
+				contentElement.value !== undefined &&
+				height !== prevState.value?.height
+			) {
 				// Remove display: none from the content div
 				// if it was hidden to prevent tabbing into it
-				if (prevState?.height !== undefined) {
-					showContent(prevState.height);
+				if (prevState.value?.height !== undefined) {
+					showContent(prevState.value.height);
 				}
 
 				// Cache content height
@@ -221,8 +228,7 @@ export const AnimateHeight = defineComponent({
 				} = {
 					overflow: 'hidden',
 				};
-				const isCurrentHeightAuto = prevState?.height === 'auto';
-				console.log('isCurrent', prevState);
+				const isCurrentHeightAuto = prevState.value?.height === 'auto';
 
 				if (isNumber(height)) {
 					// If value is string "0" make sure we convert it to number 0
@@ -253,11 +259,12 @@ export const AnimateHeight = defineComponent({
 				const updatedAnimationStateClasses = classnames({
 					[animationStateClasses.animating]: true,
 					[animationStateClasses.animatingUp]:
-						prevState?.height !== undefined &&
-						(prevState.height === 'auto' || height < prevState.height),
+						prevState.value?.height !== undefined &&
+						(prevState.value?.height === 'auto' ||
+							height < prevState.value?.height),
 					[animationStateClasses.animatingDown]:
-						prevState?.height !== undefined &&
-						(height === 'auto' || height > prevState.height),
+						prevState.value?.height !== undefined &&
+						(height === 'auto' || height > prevState.value?.height),
 					[animationStateClasses.animatingToHeightZero]:
 						timeoutState.height === 0,
 					[animationStateClasses.animatingToHeightAuto]:
