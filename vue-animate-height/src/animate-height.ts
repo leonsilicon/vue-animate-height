@@ -420,7 +420,7 @@ export const AnimateHeight = defineComponent({
 							style: contentStyle,
 							ref: contentElement,
 						},
-						slots.default
+						slots.default?.()
 					),
 				]
 			);
