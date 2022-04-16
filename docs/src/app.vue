@@ -19,7 +19,7 @@ const exampleCode = outdent`
 	  height='auto'
 	>
 	  <h1>Your content goes here</h1>
-	  <p>Put as many React or HTML components here.</p>
+	  <p>Put as many Vue or HTML components here.</p>
 	</AnimateHeight>
 `;
 
