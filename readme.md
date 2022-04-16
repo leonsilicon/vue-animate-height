@@ -13,8 +13,6 @@ The content's opacity can be optionally animated as well (see the `animateOpacit
 
 CSS classes are applied during specific animation states. For more information, check out the `animationStateClasses` prop.
 
-[Changelog](CHANGELOG.md)
-
 ## Demo
 
 Live demo: [leonzalion.github.io/vue-animate-height](https://leonzalion.github.io/vue-animate-height/)
@@ -93,7 +91,7 @@ To slide up use `0`, for slide down use `'auto'`
 
   HTML `id` attribute.
 
-- **contentClassName**: string
+- **contentClass**: string
 
   CSS class to be applied to content wrapper element.
 
@@ -171,6 +169,10 @@ When using a button to toggle height, make sure you add `aria-expanded` and `ari
   Content
 </AnimateHeight>
 ```
+
+### Reduced Motion
+
+The component checks for `prefers-reduced-motion` in the constructor and disables animations if it set to true. Please note that component doesn't listen for potential changes of the `prefers-reduced-motion` option.
 
 ## Gotchas
 

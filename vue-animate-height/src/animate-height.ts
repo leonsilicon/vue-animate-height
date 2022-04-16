@@ -1,4 +1,3 @@
-import classnames from 'classnames';
 import omit from 'just-omit';
 import type { CSSProperties, PropType } from 'vue';
 import {
@@ -35,7 +34,8 @@ const PROPS_TO_OMIT = [
 	'animateOpacity',
 	'animationStateClasses',
 	'applyInlineTransitions',
-	'contentClassName',
+	'contentClass',
+	'class',
 	'delay',
 	'duration',
 	'easing',
@@ -59,7 +59,7 @@ export const AnimateHeight = defineComponent({
 			type: Boolean,
 			default: true,
 		},
-		contentClassName: {
+		contentClass: {
 			type: String,
 			default: undefined,
 		},
@@ -146,19 +146,42 @@ export const AnimateHeight = defineComponent({
 		};
 
 		function getStaticStateClasses(height: string | number) {
-			return classnames({
+			return {
 				[animationStateClasses.static]: true,
 				[animationStateClasses.staticHeightZero]: height === 0,
 				[animationStateClasses.staticHeightSpecific]:
 					typeof height === 'number' && height > 0,
 				[animationStateClasses.staticHeightAuto]: height === 'auto',
-			});
+			};
 		}
 
 		const animationStateStaticClasses = getStaticStateClasses(height);
 
+		const isBrowser = typeof window !== 'undefined';
+
+		let prefersReducedMotion = false;
+		if (isBrowser) {
+			prefersReducedMotion = matchMedia('(prefers-reduced-motion').matches;
+		}
+
+		function getTimings() {
+			if (prefersReducedMotion) {
+				return {
+					delay: 0,
+					duration: 0,
+				};
+			}
+
+			const { delay, duration } = props;
+
+			return {
+				delay,
+				duration,
+			};
+		}
+
 		type State = {
-			animationStateClasses: string;
+			animationStateClasses: Record<string, boolean>;
 			height: Height;
 			overflow: string | null;
 			shouldUseTransitions: boolean;
@@ -263,7 +286,7 @@ export const AnimateHeight = defineComponent({
 			}
 
 			// Animation classes
-			const updatedAnimationStateClasses = classnames({
+			const updatedAnimationStateClasses = {
 				[animationStateClasses.animating]: true,
 				[animationStateClasses.animatingUp]:
 					prevHeight !== undefined &&
@@ -277,7 +300,7 @@ export const AnimateHeight = defineComponent({
 					timeoutState.height === 'auto',
 				[animationStateClasses.animatingToHeightSpecific]:
 					timeoutState.height > 0,
-			});
+			};
 
 			// Animation classes to be put after animation is complete
 			const timeoutAnimationStateClasses = getStaticStateClasses(
@@ -374,12 +397,12 @@ export const AnimateHeight = defineComponent({
 			const {
 				animateOpacity,
 				applyInlineTransitions,
-				contentClassName,
-				delay,
-				duration,
+				contentClass,
 				easing,
 				id,
 			} = props;
+
+			const { duration, delay } = getTimings();
 
 			const { height, overflow, animationStateClasses, shouldUseTransitions } =
 				state.value;
@@ -418,11 +441,6 @@ export const AnimateHeight = defineComponent({
 				}
 			}
 
-			const componentClasses = classnames({
-				[animationStateClasses]: true,
-				[attrs.class as string]: attrs.class,
-			});
-
 			// Check if user passed aria-hidden prop
 			const hasAriaHiddenProp = typeof props.ariaHidden !== 'undefined';
 			const ariaHidden = hasAriaHiddenProp ? props.ariaHidden : height === 0;
@@ -432,7 +450,7 @@ export const AnimateHeight = defineComponent({
 				{
 					...omit(props, PROPS_TO_OMIT),
 					'aria-hidden': ariaHidden,
-					class: componentClasses,
+					class: [animationStateClasses, attrs.class],
 					id,
 					style: componentStyle,
 				},
@@ -440,7 +458,7 @@ export const AnimateHeight = defineComponent({
 					h(
 						'div',
 						{
-							class: contentClassName,
+							class: contentClass,
 							style: contentStyle,
 							ref: contentElement,
 						},
