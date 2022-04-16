@@ -172,7 +172,7 @@ When using a button to toggle height, make sure you add `aria-expanded` and `ari
 
 ### Reduced Motion
 
-The component checks for `prefers-reduced-motion` in the constructor and disables animations if it set to true. Please note that component doesn't listen for potential changes of the `prefers-reduced-motion` option.
+The component checks for `prefers-reduced-motion` and disables animations if it set to true. Please note that component doesn't listen for potential changes of the `prefers-reduced-motion` option.
 
 ## Gotchas
 
