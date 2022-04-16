@@ -1,7 +1,6 @@
 # Vue Animate Height
 
-[![npm version](https://img.shields.io/npm/v/vue-animate-height.svg?style=flat-square)](https://www.npmjs.com/package/vue-animate-height)
-[![npm downloads](https://img.shields.io/npm/dm/vue-animate-height.svg?style=flat-square)](https://www.npmjs.com/package/vue-animate-height)
+[![npm version](https://img.shields.io/npm/v/vue-animate-height)](https://npmjs.com/package/vue-animate-height)
 
 A port of Stanko's [React Animate Height](https://github.com/Stanko/react-animate-height) for Vue.js.
 
