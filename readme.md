@@ -6,9 +6,9 @@ A port of Stanko's excellent [React Animate Height](https://github.com/Stanko/re
 
 > Most of the below documentation is derived from [React Animate Height's documentation](https://github.com/Stanko/react-animate-height/blob/master/README.md).
 
-Lightweight Vue component for animating height using CSS transitions.
-Slides the element up or down and animates it to any specific height.
-The content's opacity can be optionally animated as well (see the `animateOpacity` prop below).
+Vue Animate Height is a lightweight Vue component for animating height using CSS transitions.
+It slides an element up or down and animates it to any specific height.
+The content's opacity can also be animated as well (see the `animateOpacity` prop below).
 
 CSS classes are applied during specific animation states. For more information, check out the `animationStateClasses` prop.
 
@@ -25,7 +25,7 @@ pnpm dev:docs
 
 Then, open [`localhost:3000`](http://localhost:3000) in your browser of choice.
 
-## Quick Start
+## Usage
 
 Install the package from npm:
 
@@ -60,47 +60,60 @@ const toggle = () => height.value = height.value === 0 ? 'auto' : 0;
       :height="height"
     >
       <h1>Your content goes here</h1>
-      <p>Put as many Vue or HTML components here.</p>
+      <p>Put as many Vue or HTML components here as your heart desires</p>
     </AnimateHeight>
   </div>
 </template>
 ```
 
-### Props
+## Props
 
-- **height**: numeric or percentage value (e.g. `'50%'`) or `'auto'`, required
+Additional props will be forwarded to the wrapper `div` to make adding attributes like `aria-*` easier.
+
+### height
+
+Type: `number`, `string` as percentage value (e.g. `"50%"`) or `"auto"`
+Required: `true`
 
 When changed, element height will be animated to that height.
 \
-To slide up use `0`, for slide down use `'auto'`
+To slide up, use `0`. To slide down, use `"auto"`.
 
-- **duration**: integer, default: `250`
+### duration
 
-  Duration of the animation in milliseconds.
+Type: `number`
+Default: `250`
 
-- **delay**: integer, default: `0`
+Duration of the animation in milliseconds.
 
-  Animation delay in milliseconds.
+### delay
 
-- **easing**: string, default: `'ease'`
+Type: `number`
+Default: `0`
 
-  CSS easing function to be applied to the animation.
+Animation delay in milliseconds.
 
-- **id**: string
+### easing
 
-  HTML `id` attribute.
+Type: `string`
+Default: `"ease"`
 
-- **contentClass**: string
+CSS easing function to be applied to the animation.
 
-  CSS class to be applied to content wrapper element.
+### contentClass
 
-  **Please note that you shouldn't apply properties that are messing with the layout (like `display`, `height`...), as these might break height calculations**
+Type: `string`
+Required: `false`
 
-- **animationStateClasses**: object
+CSS class to be applied to content wrapper element.
 
-  Object containing CSS class names for animation states, default:
+**Please note that you shouldn't apply properties that mess with the layout (like `display`, `height`...), as these might break height calculations.**
 
-  ```javascript
+### animationStateClasses
+
+Type: `object`
+Default: 
+```javascript
   {
     animating:                  'vah-animating',
     animatingUp:                'vah-animating--up',
@@ -113,39 +126,46 @@ To slide up use `0`, for slide down use `'auto'`
     staticHeightAuto:           'vah-static--height-auto',
     staticHeightSpecific:       'vah-static--height-specific',
   }
-  ```
+```
 
-  Please note that this object will be merged with the default object and cached when component is created, so changing it afterwards will have no effect.
+Please note that this prop will be merged with the default object and cached when the component is created, so changing it afterwards will have no effect.
 
-- **applyInlineTransitions**: boolean, default: `true`
+### applyInlineTransitions
 
-  If this flag is set to `false`, only CSS classes will be applied to the element and inline transition styles will not be present.
+Type: `boolean`
+Default: `true`
 
-- **animateOpacity**: boolean, default: `false`
+If this flag is set to `false`, only CSS classes will be applied to the element and inline transition styles will not be present.
 
-  If set to `true`, the content will fade in (and fade out) while the height is animated.
+### animateOpacity
 
-- **aria-hidden**: boolean
+Type: `boolean`
+Default: `false`
 
-  By default, this library will set `aria-hidden` to `true` when height is zero. If you wish to override it, you can pass this prop yourself.
+If set to `true`, the content will fade in (and fade out) while the height is animated.
 
-### Emits
+### aria-hidden
 
-- **animation-start**: function
+Type: `boolean`
+Required: `false`
 
-  Emitted when the animation starts.
+By default, this library will set `aria-hidden` to `true` when height is zero. If you wish to override it, you can pass this prop yourself.
 
-  Passes a payload object containing `newHeight`, the pixel value of the height at which the animation will end.
+## Emits
 
-  > **Note:** Do not confuse `@animation-start` with the HTML event `@animationstart`!
+### animation-start
 
-- **animation-end**: function
+Emitted when the animation starts.
 
-  Emitted when the animation ends.
+Passes a payload object containing `newHeight`, the pixel value of the height at which the animation will end.
 
-  Passes a payload object containing `newHeight`, the pixel value of the height at which the animation ended.
+> Do not confuse `v-on:animation-start` with the HTML event `v-on:animationstart`!
 
-Additional props will be forwarded to the wrapper `div` to make adding attributes like `aria-*` easier.
+### animation-end
+
+Emitted when the animation ends.
+
+Passes a payload object containing `newHeight`, the pixel value of the height at which the animation ended.
 
 ## Accessibility
 
