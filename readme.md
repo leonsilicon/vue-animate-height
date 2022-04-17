@@ -216,5 +216,6 @@ You can do this by passing a `class` or by using inline CSS in the `style` prop:
 
 ```vue
 <AnimateHeight style="flex-shrink: 0">
+```
 
 Check out [issue #89 of React Animate Height](https://github.com/Stanko/react-animate-height/issues/89) for an example and more details.
