@@ -73,6 +73,7 @@ Additional props will be forwarded to the wrapper `div` to make adding attribute
 ### height
 
 Type: `number`, `string` as percentage value (e.g. `"50%"`) or `"auto"`
+\
 Required: `true`
 
 When changed, element height will be animated to that height.
@@ -82,6 +83,7 @@ To slide up, use `0`. To slide down, use `"auto"`.
 ### duration
 
 Type: `number`
+\
 Default: `250`
 
 Duration of the animation in milliseconds.
@@ -89,6 +91,7 @@ Duration of the animation in milliseconds.
 ### delay
 
 Type: `number`
+\
 Default: `0`
 
 Animation delay in milliseconds.
@@ -96,6 +99,7 @@ Animation delay in milliseconds.
 ### easing
 
 Type: `string`
+\
 Default: `"ease"`
 
 CSS easing function to be applied to the animation.
@@ -103,6 +107,7 @@ CSS easing function to be applied to the animation.
 ### contentClass
 
 Type: `string`
+\
 Required: `false`
 
 CSS class to be applied to content wrapper element.
@@ -112,6 +117,7 @@ CSS class to be applied to content wrapper element.
 ### animationStateClasses
 
 Type: `object`
+\
 Default: 
 ```javascript
   {
@@ -133,6 +139,7 @@ Please note that this prop will be merged with the default object and cached whe
 ### applyInlineTransitions
 
 Type: `boolean`
+\
 Default: `true`
 
 If this flag is set to `false`, only CSS classes will be applied to the element and inline transition styles will not be present.
@@ -140,6 +147,7 @@ If this flag is set to `false`, only CSS classes will be applied to the element 
 ### animateOpacity
 
 Type: `boolean`
+\
 Default: `false`
 
 If set to `true`, the content will fade in (and fade out) while the height is animated.
@@ -147,6 +155,7 @@ If set to `true`, the content will fade in (and fade out) while the height is an
 ### aria-hidden
 
 Type: `boolean`
+\
 Required: `false`
 
 By default, this library will set `aria-hidden` to `true` when height is zero. If you wish to override it, you can pass this prop yourself.
