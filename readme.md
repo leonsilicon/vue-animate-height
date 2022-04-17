@@ -2,7 +2,7 @@
 
 [![npm version](https://img.shields.io/npm/v/vue-animate-height)](https://npmjs.com/package/vue-animate-height)
 
-A port of Stanko's [React Animate Height](https://github.com/Stanko/react-animate-height) for Vue.js.
+A port of Stanko's excellent [React Animate Height](https://github.com/Stanko/react-animate-height) for Vue.js.
 
 > Most of the below documentation is derived from [React Animate Height's documentation](https://github.com/Stanko/react-animate-height/blob/master/README.md).
 
