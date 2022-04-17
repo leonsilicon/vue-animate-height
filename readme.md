@@ -168,7 +168,7 @@ Emitted when the animation starts.
 
 Passes a payload object containing `newHeight`, the pixel value of the height at which the animation will end.
 
-> Do not confuse `v-on:animation-start` with the HTML event `v-on:animationstart`!
+> Do not confuse `v-on:animation-start` with the native HTML event `v-on:animationstart`!
 
 ### animation-end
 
