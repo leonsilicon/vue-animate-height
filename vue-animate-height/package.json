@@ -40,5 +40,18 @@
 	},
 	"publishConfig": {
 		"directory": "dist"
-	}
+	},
+	"keywords": [
+		"vue",
+		"component",
+		"vue-component",
+		"slide",
+		"slide up",
+		"slide down",
+		"height",
+		"animate height",
+		"vue.js",
+		"animation",
+		"transition"
+	]
 }
