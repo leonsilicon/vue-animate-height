@@ -160,8 +160,10 @@ export const AnimateHeight = defineComponent({
 		const isBrowser = typeof window !== 'undefined';
 
 		let prefersReducedMotion = false;
-		if (isBrowser) {
-			prefersReducedMotion = matchMedia('(prefers-reduced-motion').matches;
+		if (isBrowser && window.matchMedia !== undefined) {
+			prefersReducedMotion = window.matchMedia(
+				'(prefers-reduced-motion'
+			).matches;
 		}
 
 		function getTimings() {
