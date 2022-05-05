@@ -10,7 +10,7 @@
 		"test": "pnpm run test --filter=./vue-animate-height",
 		"lint": "pnpm recursive run lint",
 		"prettier": "pnpm recursive run prettier",
-		"tc": "pnpm recursive run tc"
+		"typecheck": "pnpm recursive run tc"
 	},
 	"devDependencies": {
 		"@leonzalion/configs": "^1.2.16",
