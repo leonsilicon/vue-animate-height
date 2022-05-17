@@ -1,0 +1,7 @@
+{
+	"name": "@vue-animate-height/scripts",
+	"type": "module",
+	"dependencies": {
+		"lion-system": "^1.3.34"
+	}
+}
