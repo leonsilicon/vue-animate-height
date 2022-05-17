@@ -1,10 +1,10 @@
 {
 	"name": "vue-animate-height-monorepo",
 	"scripts": {
-		"dev:docs": "pnpm run dev --filter=@vue-animate-height/docs",
-		"build:docs": "pnpm run build --filter=@vue-animate-height/docs",
+		"dev:docs": "pnpm --filter=@vue-animate-height/docs run dev",
+		"build:docs": "pnpm --filter=@vue-animate-height/docs run build",
 		"prepare": "lion-git-hooks",
-		"build": "pnpm run build --filter=vue-animate-height"
+		"build": "pnpm --filter=vue-animate-height run build"
 	},
 	"devDependencies": {
 		"@types/node": "^17.0.24",
