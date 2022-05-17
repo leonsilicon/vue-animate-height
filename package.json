@@ -1,21 +1,14 @@
 {
 	"name": "vue-animate-height-monorepo",
-	"type": "module",
 	"scripts": {
-		"release": "pnpm run release --filter=./vue-animate-height",
-		"dev:docs": "pnpm run dev --filter=./docs",
-		"build:docs": "pnpm run build --filter=./docs",
+		"dev:docs": "pnpm run dev --filter=@vue-animate-height/docs",
+		"build:docs": "pnpm run build --filter=@vue-animate-height/docs",
 		"prepare": "lion-git-hooks",
-		"build": "pnpm run build --filter=./vue-animate-height",
-		"test": "pnpm run test --filter=./vue-animate-height",
-		"lint": "pnpm recursive run lint",
-		"prettier": "pnpm recursive run prettier",
-		"typecheck": "pnpm recursive run tc"
+		"build": "pnpm run build --filter=vue-animate-height"
 	},
 	"devDependencies": {
 		"@types/node": "^17.0.24",
-		"eslint-define-config": "^1.3.0",
-		"lionconfig": "^1.6.2",
+		"lionconfig": "^1.6.25",
 		"typescript": "^4.6.3"
 	}
 }

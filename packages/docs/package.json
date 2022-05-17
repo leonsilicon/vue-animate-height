@@ -1,7 +1,7 @@
 {
-	"name": "vue-animate-height-docs",
-	"private": true,
+	"name": "@vue-animate-height/docs",
 	"type": "module",
+	"private": true,
 	"scripts": {
 		"dev": "vite",
 		"build": "vue-tsc --noEmit && vite build",

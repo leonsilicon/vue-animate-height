@@ -16,19 +16,14 @@
 	"type": "module",
 	"exports": "./src/index.ts",
 	"scripts": {
-		"release": "lionp",
 		"preinstall": "pnpm build",
 		"build": "node-ts ./scripts/build.ts",
-		"start": "node-ts ./src/index.ts",
-		"test": "vitest run",
-		"lint": "eslint --cache --fix .",
-		"prettier": "prettier --write .",
-		"tc": "tsc --noEmit"
+		"start": "node-ts ./src/index.ts"
 	},
 	"devDependencies": {
 		"desm": "^1.2.0",
 		"execa": "^6.1.0",
-		"lion-system": "^1.3.11",
+		"lion-system": "^1.3.34",
 		"vitest": "^0.9.3",
 		"vue": "^3.2.33"
 	},

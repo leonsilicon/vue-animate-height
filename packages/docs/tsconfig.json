@@ -1,11 +1,6 @@
 {
-	"extends": "../tsconfig.json",
+	"extends": "lionconfig/tsconfig.json",
 	"compilerOptions": {
-		"target": "esnext",
-		"useDefineForClassFields": true,
-		"module": "esnext",
-		"moduleResolution": "node",
-		"strict": true,
 		"jsx": "preserve",
 		"sourceMap": true,
 		"resolveJsonModule": true,
@@ -14,5 +9,5 @@
 		"lib": ["esnext", "dom"],
 		"types": ["vite/client", "vue/ref-macros"]
 	},
-	"include": ["src"]
+	"include": ["./src"]
 }
